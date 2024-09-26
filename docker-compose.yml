@@ -1,0 +1,49 @@
+version: "3.9"
+services:
+  migrator:
+    build: .
+    image: collateral-migrator:latest
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+      - ./secrets:/secrets:ro
+    command: bash -lc "python -m app.migration.migrate"
+
+  tagging:
+    build: .
+    image: collateral-tagging:latest
+    env_file:
+      - .env
+    ports:
+      - "${TAGGING_BIND_PORT:-8081}:8081"
+    volumes:
+      - ./:/app
+      - ./secrets:/secrets:ro
+    command: bash -lc "uvicorn app.tagging.microservice:app --host 0.0.0.0 --port 8081"
+
+  search:
+    build: .
+    image: collateral-search:latest
+    env_file:
+      - .env
+    ports:
+      - "${SEARCH_BIND_PORT:-8080}:8080"
+    volumes:
+      - ./:/app
+      - ./secrets:/secrets:ro
+    command: bash -lc "uvicorn app.search.api:app --host 0.0.0.0 --port 8080"
+
+  audit:
+    build: .
+    image: collateral-audit:latest
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+      - ./secrets:/secrets:ro
+    command: bash -lc "python -m app.audits.audit_tagging"
+
+

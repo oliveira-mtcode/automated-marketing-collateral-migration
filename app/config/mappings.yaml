@@ -1,0 +1,21 @@
+identities:
+  users:
+    # box_user_id: user@example.com
+  groups:
+    # box_group_id: marketing-team@example.com
+
+campaign_keywords:
+  - summer
+  - winter
+  - back_to_school
+  - holiday
+  - product_launch
+
+tagging:
+  logo_detection: true
+  label_detection: true
+  text_detection: true
+  face_detection: false
+  safe_search: false
+
+
