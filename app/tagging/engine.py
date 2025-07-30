@@ -49,3 +49,5 @@ def tag_video_gcs_uri(gcs_uri: str) -> Dict:
     return {"labels": list(set(labels)), "logos": list(set(logos))}
 
 
+
+# tweak 21 at 2025-09-26 19:57:44
